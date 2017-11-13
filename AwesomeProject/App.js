@@ -13,21 +13,25 @@ import {
 import Icon from 'react-native-vector-icons/Ionicons';
 
 import ArtistList from './src/Artist/ArtistList'
+import { getArtists } from './src/api-client'
 
 
-export default class App extends Component<{}> {
+export default class App extends Component {
+
+  state = {
+    artist: []
+  }
+
+  componentDidMount() {
+    getArtists()
+      .then(data => this.setState({ artist: data }))
+  }
 
 
 
   render() {
 
-    const artist = {
-      image: 'https://lastfm-img2.akamaized.net/i/u/300x300/31a51f6e3ec647c8997150ec837891c7.png',
-      name: 'David Bowie',
-      likes: 2000,
-      comments: 140
-    }
-
+    const artist = this.state.artist
     return (
       <View style={styles.container}>
         <ArtistList artist={artist}/>
